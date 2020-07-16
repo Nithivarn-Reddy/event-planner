@@ -88,5 +88,7 @@ Users_table_script
 
 5) Now , start the react app using npm start.
 
+Then you can access the event planner.
+
 
 
