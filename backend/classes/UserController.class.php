@@ -46,12 +46,12 @@ class UserController extends Dbh
     private function checkIfUserExistsAndGenerateJwt()
     {
             $input = (array) json_decode(file_get_contents('php://input'),TRUE);
-            if(! $this->isValidEvent($input))
+            if(! $this->isValidInput($input))
             {
                 return $this->unprocessableEntityResponse();
             }
             else{
-                $res=$this->user->checkIfEmailExists($input['userName']);
+                $res=$this->user->checkIfUserNameExists($input['userName']);
                 $issue_date = time();
                 $notBeforeValid = $issue_date;
                 $expiry_date = $issue_date + 30;
@@ -92,13 +92,13 @@ class UserController extends Dbh
     private function createUser()
     {
         $input = (array) json_decode(file_get_contents('php://input'),TRUE);
-        if(! $this->isValidEvent($input))
+        if(! $this->isValidInput($input))
         {
             return $this->unprocessableEntityResponse();
         }
         else{
 
-            if(!$this->user->checkIfEmailExists($input['userName']))
+            if(!$this->user->checkIfUserNameExists($input['userName']))
             {
                 $this->user->createUser($input);
                 $response['status_code_header'] = "HTTP/1.1 201 Created";
@@ -115,7 +115,7 @@ class UserController extends Dbh
             
         }
     }
-    private function isValidEvent($input)
+    private function isValidInput($input)
     {
         //var_dump(empty($input['userName']));
         if((! isset($input['userName'])) ||  empty($input['userName']))

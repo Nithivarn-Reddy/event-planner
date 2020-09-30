@@ -13,7 +13,7 @@ class User extends Dbh{
            }
     }
 
-    function checkIfEmailExists($userName)
+    function checkIfUserNameExists($userName)
     {
         $sql = "select * from users where userName=?";
         try{
